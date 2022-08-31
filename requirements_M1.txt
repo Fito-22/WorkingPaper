@@ -10,7 +10,7 @@ pandas
 scikit-learn
 
 # tests/linter
-black
+black==21.7b0
 coverage
 flake8
 pytest
@@ -33,4 +33,4 @@ nltk
 
 # model
 
-tensorflow
+tensorflow-macos==2.5.0
