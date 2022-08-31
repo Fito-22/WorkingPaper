@@ -61,6 +61,7 @@ Clone the project and install it:
 ```bash
 git clone git@github.com:{group}/WorkingPaper.git
 cd WorkingPaper
+''' If you are using a M1 mac : use requirements_M1.txt '''
 pip install -r requirements.txt
 make clean install test                # install and test
 ```
