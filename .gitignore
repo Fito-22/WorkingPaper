@@ -6,4 +6,4 @@ raw_data/
 *.csv
 **/__pycache__/
 .env
-requirements.txt
+.envrc
