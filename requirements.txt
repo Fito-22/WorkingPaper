@@ -8,6 +8,10 @@ wheel>=0.29
 numpy
 pandas
 scikit-learn
+gensim==4.2.0
+tensorflow==2.9.1
+tensorflow-estimator==2.9.0
+tensorflow-io-gcs-filesystem==0.26.0
 openalexapi-0.0.1a0
 BeautifulSoup
 re
