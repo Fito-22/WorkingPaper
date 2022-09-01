@@ -129,7 +129,6 @@ def get_data_arxiv():
     a=[]
     for topic in main_topics:
         for sub_topic_name, sub_topic_index in topic.items():
-            counts_subtopic = 0
             sub_topic = soup.find_all('a', id=f'{sub_topic_index}')[0]['href']
             # print(f'Taking PDFs from: {sub_topic_name}')
             st_response = requests.get(f'https://arxiv.org{sub_topic}?show=100')
@@ -147,10 +146,8 @@ def get_data_arxiv():
         print(f'Downloading: file_{index}.pdf')
         name = f"file_{index}.pdf"
         response=requests.get(url)
-            with open(name,'wb') as f:                                  #Create a copy of the PDF as a file in the local
-                f.write(response.content)
-        size = int(os.path.getsize(name))*(1/1024)*(1/1024)
-
+        with open(name,'wb') as f:                                  #Create a copy of the PDF as a file in the local
+            f.write(response.content)
         print('Saving it')
         try:
             text = extract_text(name)
@@ -219,7 +216,7 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
         b = a.replace('´', '')                  #Fix Text with áéíóú
         X.append(b)
 
-        if index % chunk_size == 0 and index != 0 :                 #Storage in Chunks
+        if index % chunk_size == 0 and index-start != 0 :                 #Storage in Chunks
             print(f'Saving in alex_chunk_{chunk_num}')
             alex_dataset = pd.DataFrame(X, columns=['text'])
             alex_dataset['subtopic'] = list(alex_links_df[index-chunk_size:index+1]['subconcepts'])
@@ -231,4 +228,4 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
     return None
 
 if __name__ == '__main__':
-    get_data_alex(start=901)
+    get_data_alex(start=900)
