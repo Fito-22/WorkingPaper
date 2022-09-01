@@ -9,17 +9,8 @@ numpy
 pandas
 scikit-learn
 
-gensim==4.2.0
-tensorflow==2.9.1
-tensorflow-estimator==2.9.0
-tensorflow-io-gcs-filesystem==0.26.0
-
-openalexapi-0.0.1a0
-BeautifulSoup
-re
-
 # tests/linter
-black
+black==21.7b0
 coverage
 flake8
 pytest
@@ -30,7 +21,6 @@ gcsfs
 google-cloud-storage
 mlflow
 s3fs
-requests
 
 # utilities
 six>=1.14
@@ -43,4 +33,4 @@ nltk
 
 # model
 
-tensorflow
+tensorflow-macos==2.5.0
