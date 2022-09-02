@@ -53,3 +53,6 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+get_data_alex:
+	@python WorkingPaper/data/data.py
