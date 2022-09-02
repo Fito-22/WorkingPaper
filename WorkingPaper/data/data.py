@@ -222,10 +222,12 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
             alex_dataset['subtopic'] = list(alex_links_df[index-chunk_size:index+1]['subconcepts'])
             alex_dataset['topic'] = list(alex_links_df[index-chunk_size:index+1]['concepts'])
             alex_dataset['year'] = list(alex_links_df[index-chunk_size:index+1]['year'])
+            alex_dataset['title'] = list(alex_links_df[index-chunk_size:index+1]['title'])
+            alex_dataset['id'] = list(alex_links_df[index-chunk_size:index+1]['id'])
             alex_dataset.to_csv(f'/home/adolfo/code/Fito-22/WorkingPaper/raw_data/alex_chunk_{chunk_num}.csv')
             X=[X[-1]]
             chunk_num+=1
     return None
 
 if __name__ == '__main__':
-    get_data_alex(start=900)
+    get_data_alex()
