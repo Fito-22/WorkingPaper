@@ -70,6 +70,7 @@ def add_topic(df,lst_math_topics):
     '''
     df['topic'] = df['subtopic'].apply(lambda x: 'mathematic' if x in lst_math_topics else 'physics')
     return df
+    
 def balancing_df(df):
     top_topics = df['topic'].value_counts().index.array[0:5]
     return df#[(df['topic'] == top_topics[0]) | (df['topic'] == top_topics[1])]

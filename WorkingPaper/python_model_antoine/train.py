@@ -6,7 +6,9 @@ from WorkingPaper.python_model_antoine.DL_logic.cleaning import final_cleaning
 from WorkingPaper.python_model_antoine.DL_logic.model import model_conv
 from WorkingPaper.python_model_antoine.DL_logic.preprocessing import def_X_y
 
+
 def training(path = 'raw_data/data_1k.csv'):
+
     '''
     Train the model with the from the raw data
     split into test and train then evaluate over
