@@ -147,8 +147,8 @@ def get_data_arxiv():
         print(f'Downloading: file_{index}.pdf')
         name = f"file_{index}.pdf"
         response=requests.get(url)
-            with open(name,'wb') as f:                                  #Create a copy of the PDF as a file in the local
-                f.write(response.content)
+        with open(name,'wb') as f:                                  #Create a copy of the PDF as a file in the local
+            f.write(response.content)
         size = int(os.path.getsize(name))*(1/1024)*(1/1024)
 
         print('Saving it')
@@ -219,16 +219,18 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
         b = a.replace('´', '')                  #Fix Text with áéíóú
         X.append(b)
 
-        if index % chunk_size == 0 and index != 0 :                 #Storage in Chunks
+        if index % chunk_size == 0 and index-start != 0 :                 #Storage in Chunks
             print(f'Saving in alex_chunk_{chunk_num}')
             alex_dataset = pd.DataFrame(X, columns=['text'])
             alex_dataset['subtopic'] = list(alex_links_df[index-chunk_size:index+1]['subconcepts'])
             alex_dataset['topic'] = list(alex_links_df[index-chunk_size:index+1]['concepts'])
             alex_dataset['year'] = list(alex_links_df[index-chunk_size:index+1]['year'])
+            alex_dataset['title'] = list(alex_links_df[index-chunk_size:index+1]['title'])
+            alex_dataset['id'] = list(alex_links_df[index-chunk_size:index+1]['id'])
             alex_dataset.to_csv(f'/home/adolfo/code/Fito-22/WorkingPaper/raw_data/alex_chunk_{chunk_num}.csv')
             X=[X[-1]]
             chunk_num+=1
     return None
 
 if __name__ == '__main__':
-    get_data_alex(start=901)
+    get_data_alex()
