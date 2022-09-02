@@ -42,10 +42,11 @@ def load_csv(path = '../../raw_data/small_dataset.csv'):
     '''creating an absolute path to be able
     to run the code on every machine '''
 
-    #abs_path = os.path.abspath(path)
+    abs_path = os.path.abspath(path)
 
-    #df = pd.read_csv(abs_path)
-    df = pd.read_csv(path)
+    df = pd.read_csv(abs_path)
+    #df = pd.read_csv(path)
+
     return df
 
 def preparing_dataframe(df):
@@ -55,9 +56,10 @@ def preparing_dataframe(df):
 
     df.rename(
         columns={"Unnamed: 0":"Index",
-            "0":"paper_text"}
+            "text":"paper_text"}
               ,inplace=True)
     df.set_index("Index",inplace=True)
+
 
     return df
 
@@ -68,9 +70,17 @@ def add_topic(df,lst_math_topics):
     '''
     df['topic'] = df['subtopic'].apply(lambda x: 'mathematic' if x in lst_math_topics else 'physics')
     return df
+    
+def balancing_df(df):
+    top_topics = df['topic'].value_counts().index.array[0:5]
+    return df#[(df['topic'] == top_topics[0]) | (df['topic'] == top_topics[1])]
 
 def load(path):
     '''
     Final load function that return a usable df
     '''
-    return add_topic(preparing_dataframe(load_csv(path)),math_lst_topics)
+    ## this return was for the small dataset
+    #return add_topic(preparing_dataframe(load_csv(path)),math_lst_topics)
+
+    ## for the final data set we don't need to add topic column
+    return balancing_df(preparing_dataframe(load_csv(path)))
