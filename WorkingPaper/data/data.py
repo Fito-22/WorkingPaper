@@ -231,3 +231,4 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
 
 if __name__ == '__main__':
     get_data_alex()
+    #You need to by hand select what you want
