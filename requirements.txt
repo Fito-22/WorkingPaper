@@ -17,6 +17,7 @@ tensorflow-io-gcs-filesystem==0.26.0
 openalexapi-0.0.1a0
 BeautifulSoup
 re
+smote==0.1
 
 # tests/linter
 black
