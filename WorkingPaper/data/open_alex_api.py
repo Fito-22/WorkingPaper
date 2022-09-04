@@ -12,7 +12,7 @@ def get_data_from_openalex():
     which will be our targets for the model training'''
 
     filter_condition_oa = 'has_oa_accepted_or_published_version:true' # filtering for open access works
-    res_per_page = 100
+    res_per_page = 100 # results per page set to 100
     cursor = '*' # cursor pagination
     url_openalex = f'https://api.openalex.org/works?filter={filter_condition_oa}&per-page={res_per_page}&cursor={cursor}'
 
@@ -29,8 +29,9 @@ def get_data_from_openalex():
         publication_years = []
         concept_names = []
         subconcept_names = []
-        for i in range(res_per_page): # check whether the type of the publication is 'journal article',
-            #whether it has a open access url pointing to a pdf and if it has been assigned to level 0 concepts and level 1 subconcepts
+        for i in range(res_per_page): # each turn we will check 100 results from the api if they match our criteria:
+            # check whether the type of the publication is 'journal article',
+            # whether it has a open access url pointing to a pdf and if it has been assigned to level 0 concepts and level 1 subconcepts
             try:
                 if (requests.get(url_openalex).json()['results'][i]['type'] == 'journal-article') \
                 & (requests.get(url_openalex).json()['results'][i]['open_access']['oa_url'].endswith('.pdf')):
@@ -53,7 +54,7 @@ def get_data_from_openalex():
         url_openalex = f'https://api.openalex.org/works?filter={filter_condition_oa}&per-page={res_per_page}&cursor={cursor}'
         print(f'cursor num {page}: {cursor}') # for the impatient
 
-        # creating a new csv for every page in the json, otherwiese for bulking could use "if page%10 == 0:""
+        # creating a new csv for every page in the json, each having info on up to 100 results; otherwiese for bulking could use "if page%10 == 0:""
         link_data = pd.DataFrame({'id': ids, 'pdf_link':open_source_article_pdfs, 'title':titles, 'year': publication_years, 'concepts': concept_names, 'subconcepts': subconcept_names})
         link_data.to_csv(f'../../raw_data/link_data_id/page{page}_link_data.csv', index=False)
 
@@ -63,7 +64,7 @@ def concatenating_openalex_data_into_single_file():
 
     ''' Make list of DataFrames from raw_data folder and then concatenate them'''
 
-    joined_files = os.path.join('/home/stefanie/code/WorkingPaper/raw_data/link_data', '*.csv')
+    joined_files = os.path.join('../../raw_data/link_data_id', '*.csv')
     joined_list = glob.glob(joined_files)
     joined_link_data = pd.concat(map(pd.read_csv, joined_list), ignore_index=True)
 
