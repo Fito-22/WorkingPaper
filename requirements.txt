@@ -4,18 +4,30 @@ setuptools>=26
 twine
 wheel>=0.29
 
-# data science
+# API
+gcsfs
+google-cloud-storage
+mlflow
+s3fs
+requests
+openalexapi-0.0.1a0
+
+# get data
+pdfminer.six==20220524
+
+# data preprocessing
 numpy
 pandas
+BeautifulSoup
+re
+nltk
 scikit-learn
-
 gensim==4.2.0
+
+# model
 tensorflow==2.9.1
 tensorflow-estimator==2.9.0
 tensorflow-io-gcs-filesystem==0.26.0
-
-BeautifulSoup
-re
 
 # tests/linter
 black
@@ -24,22 +36,8 @@ flake8
 pytest
 yapf
 
-# API
-gcsfs
-google-cloud-storage
-mlflow
-s3fs
-requests
-
 # utilities
 six>=1.14
 joblib
 memoized-property
 termcolor
-
-# prepocessing
-nltk
-
-# model
-
-tensorflow
