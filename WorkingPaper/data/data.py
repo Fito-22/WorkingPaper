@@ -230,5 +230,5 @@ def get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/joined_l
     return None
 
 if __name__ == '__main__':
-    get_data_alex()
+    get_data_alex(file='/home/adolfo/code/Fito-22/WorkingPaper/raw_data/links_201-626.csv',start=13000)
     #You need to by hand select what you want

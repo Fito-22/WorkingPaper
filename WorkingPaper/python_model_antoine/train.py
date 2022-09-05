@@ -5,7 +5,8 @@ from WorkingPaper.python_model_antoine.load import load
 from WorkingPaper.python_model_antoine.DL_logic.cleaning import final_cleaning
 from WorkingPaper.python_model_antoine.DL_logic.model import model_conv
 from WorkingPaper.python_model_antoine.DL_logic.preprocessing import def_X_y
-
+from WorkingPaper.save_load_models.save_model import save_model
+from WorkingPaper.save_load_models.load_model import load_model
 
 def training(path = 'raw_data/data_1k.csv'):
 
@@ -51,16 +52,34 @@ def training(path = 'raw_data/data_1k.csv'):
     #print(f'X_test_vect_shape : {X_test_vect.shape}')
     #print(X_train_vect)
 
-    history = cnn_model.fit(X_train_vect, y_topic_train, validation_split=0.3,epochs=5, batch_size=30, verbose=1)
+
+    history = cnn_model.fit(X_train_vect, y_topic_train, validation_split=0.3,epochs=3, batch_size=30, verbose=1)
     print('Model fitted to the train set')
+
+
+    #ld_model = load_model()
 
     eval_test = cnn_model.evaluate(X_test_vect,y_topic_test)
     print('Model evaluated ont the test set')
-
+    print(eval_test)
     test = cnn_model.predict(X_test_vect)
     print(test)
 
-    return history, cnn_model, eval_test
+
+    params = {
+        'optimizer':'adam',
+        'embeded_len':'50',
+        'kernel_size': 3,
+        'batch_size':'30'
+    }
+
+    metrics={'accuracy':np.max(history.history['accuracy'])}
+
+    save_model(cnn_model,params,metrics)
+
+    return None
+
+
 
 if __name__ == '__main__':
     training()

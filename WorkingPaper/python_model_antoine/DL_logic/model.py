@@ -41,3 +41,4 @@ def model_conv(X_train,X_test,y_train_target):
                   metrics=['accuracy'])
 
     return cnn, X_train_vect, X_test_vect
+
