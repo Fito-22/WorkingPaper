@@ -8,7 +8,7 @@ import gensim.downloader as api
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
 def preprocessor(path: str) -> (np.ndarray, pd.DataFrame):
-    
+
     '''This function prepares the data to be used in model training. The two components treated here are:
     1. feature: the text from scientific papers that where read out of open access pdfs (large text strings),
     2. target: information on the academic discipline and subdiscipline associated with the papers (labels of type string).
@@ -29,8 +29,8 @@ def preprocessor(path: str) -> (np.ndarray, pd.DataFrame):
     data['text'] = data['text'].apply(lambda x: re.sub(r'[^a-z]', ' ', x))
 
     # Tokenizing
-    embedding_size = 1000 # to save computational costs, we will already implement the embedding_size here
-    num_of_words_to_keep = int(embedding_size*5) # adding some margin, because in spotword removal and word2vec embedding some will be removed
+    longest_token_size = 1000 # to save computational costs, we will implement a longest_token_size here
+    num_of_words_to_keep = int(longest_token_size*5) # adding some margin, because in spotword removal and word2vec embedding some will be removed
     data['modified text'] = data['text'].apply(lambda text: ' '.join(text.split()[:num_of_words_to_keep]))
     data['modified text'] = data['modified text'].apply(word_tokenize)
 
@@ -39,11 +39,9 @@ def preprocessor(path: str) -> (np.ndarray, pd.DataFrame):
     data['modified text'] = data['modified text'].apply(lambda x: [word for word in x if not word in stop_words])
     data['modified text'] = data['modified text'].apply(lambda x: [word for word in x if len(word)>1])
 
-    #############################################################        <--- might be deleted later
     # Adding columns with word counts (was used for exploration and is kept here for purpose of consistency)
     data['total words per text'] = data['text'].apply(lambda x : len(x))
     data['words per modified text'] = data['modified text'].apply(lambda x : len(x))
-    #############################################################
 
     # Excluding representations with less than 10 tokens
     data = data[data['words per modified text'] > 9].reset_index().drop(columns=['index'], axis=1)
@@ -83,14 +81,15 @@ def preprocessor(path: str) -> (np.ndarray, pd.DataFrame):
     data['embedded text'] = series_embedded
 
     # Padding all the embedded words
-    X_pad = pad_sequences(series_embedded, dtype='float32', padding='post', value=0, maxlen=embedding_size)
+    X_pad = pad_sequences(series_embedded, dtype='float32', padding='post', value=0, maxlen=longest_token_size)
 
     # OneHot Encoding topics
     enc = OneHotEncoder(handle_unknown='ignore', sparse=False)
     topic_targets_enc = pd.DataFrame(enc.fit_transform(data[['topic']]))
     topic_targets_enc.columns = enc.get_feature_names_out()
 
+    #return print(X_pad, topic_targets_enc)
     return (X_pad, topic_targets_enc)
 
 
-#preprocessor('raw_data/data_1k.csv')
+preprocessor('raw_data/data_1k.csv')
