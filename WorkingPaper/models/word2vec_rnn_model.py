@@ -8,13 +8,13 @@ from tensorflow.keras.optimizers.schedules import ExponentialDecay
 
 from WorkingPaper.preprocessing.preprocessing import preprocessor
 
-def train_word2vec_rnn_model():
+def train_word2vec_rnn_model(path):
 
     '''This function traines a RNN model with vectorized tokens already pretrained with Wikipedia data.
     '''
 
     # Getting the preprocessed data in form of a tuple: (X_pad, topic_targets_enc) and unpacking it
-    X_pad, topic_targets_enc = preprocessor('raw_data/data_1k.csv') # path should maybe be hardcoded into .env?
+    X_pad, topic_targets_enc = preprocessor(path)
 
     # Train test split
     X_train, X_test, y_train, y_test = train_test_split(X_pad, topic_targets_enc, test_size=0.3)
@@ -73,4 +73,4 @@ def train_word2vec_rnn_model():
     #return print(f'model {word2vev_rnn_model} was created')      <--- for testing purposes
     return word2vev_rnn_model
 
-train_word2vec_rnn_model()
+train_word2vec_rnn_model('raw_data/data_1k.csv')
