@@ -7,3 +7,4 @@ raw_data/
 **/__pycache__/
 .envrc
 tmp_preprocessing.py
+WorkingPaper/local/
