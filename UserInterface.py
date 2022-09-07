@@ -1,20 +1,20 @@
-from turtle import pd
-import streamlit as st
 
-import numpy as np
-import pandas as pd
+import streamlit as st
 import requests
-from pdfminer.high_level import extract_text
+import io
+#from pdfminer.high_level import extract_text
 
 st.markdown('Hello World')
-file=st.file_uploader('Upload a file')
+file=st.file_uploader('Upload a file', type='pdf')
 
-text = extract_text(file)
-st.markdown(text)
+#url_upload='http://127.0.0.1:8000/uploadfile'
+#st.markdown(file.getvalue())
+#response = requests.post(url, {'file':file})
+#st.markdown(response.content)
 
-url='https://workingpaper-x6wjgko6ta-ew.a.run.app/pred'
-params={'file': text}
+url_path='http://127.0.0.1:8000/path'
+path = st.text_input('Insert path')
+params={'path':path}
 
-response=requests.get(url, params)
-st.markdown(response.content)
-#print(response.content)
+response=requests.get(url_path, params).json()
+st.markdown(response['text'])
