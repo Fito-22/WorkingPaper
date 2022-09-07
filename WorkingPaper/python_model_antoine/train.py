@@ -8,7 +8,7 @@ from WorkingPaper.python_model_antoine.DL_logic.preprocessing import def_X_y
 from WorkingPaper.save_load_models.save_model import save_model
 from WorkingPaper.save_load_models.load_model import load_model
 
-def training(path = 'raw_data/data_1k.csv'):
+def training(path = '/home/adolfo/code/Fito-22/WorkingPaper/WorkingPaper/local/data/data_3k.csv'):
 
     '''
     Train the model with the from the raw data

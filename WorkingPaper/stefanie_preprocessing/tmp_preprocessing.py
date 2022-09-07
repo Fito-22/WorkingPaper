@@ -81,27 +81,8 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     data = data[data['broader_subtopic'] != 'physiology']
     data = data[data['broader_subtopic'] != 'computational biology']
 
-    # Filtering the data to exclude interdisciplinary medical subtopics (for more distinguishability)
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'algorithm')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'cell biology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'environmental ethics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'virology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'optics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'nursing')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'medical physics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'genetics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'bioinformatics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'data science')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microbiology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microeconomics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'biotechnology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'computational biology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'psychotherapist')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'animal science')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'food science')]
-
     # Filtering for those topics that occurr more commonly in our data        <----- percentile can be adjusted
-    common_topics = (data['topic'].value_counts() > np.percentile(data['topic'].value_counts(), 80)) # topic occurrence until xxth percentile
+    common_topics = (data['topic'].value_counts() > np.percentile(data['topic'].value_counts(), 25)) # topic occurrence until 25th percentile
     filtered_topics = common_topics[common_topics == True].index
 
     # Filtering for those subtopics that occurr more commonly in our data     <----- instead of cutting of at the mean, can also be adjusted like above
@@ -146,7 +127,7 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     topic_targets_enc = pd.DataFrame(enc.fit_transform(data[['topic']]))
     topic_targets_enc.columns = enc.get_feature_names_out()
 
-    #return print(X_pad, topic_targets_enc)
+    # return print(X_pad, topic_targets_enc)
     if model_type == 'word2vec':
         return (X_pad, topic_targets_enc)
     elif model_type == 'embedding':
