@@ -10,7 +10,7 @@ google-cloud-storage
 mlflow
 s3fs
 requests
-openalexapi-0.0.1a0
+#openalexapi-0.0.1a0
 
 # get data
 pdfminer.six==20220524
@@ -18,8 +18,8 @@ pdfminer.six==20220524
 # data preprocessing
 numpy
 pandas
-BeautifulSoup
-re
+bs4
+regex
 nltk
 #nltk.download('wordnet')   <-- only on linux
 #nltk.download('omw-1.4')   <-- only on linux
@@ -43,3 +43,8 @@ six>=1.14
 joblib
 memoized-property
 termcolor
+colorama
+
+# api
+fastapi
+uvicorn
