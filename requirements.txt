@@ -21,6 +21,8 @@ pandas
 BeautifulSoup
 re
 nltk
+#nltk.download('wordnet')   <-- only on linux
+#nltk.download('omw-1.4')   <-- only on linux
 scikit-learn
 gensim==4.2.0
 
