@@ -23,33 +23,6 @@ def save_model(model: Model = None,
 
     timestamp = time.strftime("%Y%m%d-%H%M%S")
 
-    if os.environ.get("MODEL_TARGET") == "mlflow":
-
-        # retrieve mlflow env params
-        MLFLOW_TRACKING_URI = os.environ.get('MLFLOW_TRACKING_URI')
-        MLFLOW_EXPERIMENT = os.environ.get('MLFLOW_EXPERIMENT')
-        # configure mlflow
-        print('Saving in mlflow')
-        mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-        mlflow.set_experiment(experiment_name=MLFLOW_EXPERIMENT)
-
-
-        with mlflow.start_run():
-            print('Pushing parameters')
-            # STEP 1: push parameters to mlflow
-            mlflow.log_params(params)
-            print('Pushing metrics')
-            # STEP 2: push metrics to mlflow
-            mlflow.log_metrics(metrics)
-            print('Pushing model')
-            # STEP 3: push model to mlflow
-            #We are not saving the model because the data is too large
-            # mlflow.keras.log_model(keras_model=model,
-                           #artifact_path="model",
-                           #keras_module="tensorflow.keras",
-                           #registered_model_name="workingpaper")
-
-        return None
 
     print(Fore.BLUE + "\nSave model to local disk..." + Style.RESET_ALL)
 
