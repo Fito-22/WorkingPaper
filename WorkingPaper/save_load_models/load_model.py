@@ -9,7 +9,6 @@ from tensorflow.keras import Model, models
 
 LOCAL_REGISTRY_PATH = os.environ.get("LOCAL_REGISTRY_PATH")
 
-
 def load_model(save_copy_locally=False) -> Model:
     """
     load the latest saved model, return None if no model found
@@ -32,6 +31,8 @@ def load_model(save_copy_locally=False) -> Model:
         return model
 
     print(Fore.BLUE + "\nLoad model from local disk..." + Style.RESET_ALL)
+
+    LOCAL_REGISTRY_PATH = os.environ.get("LOCAL_REGISTRY_PATH")
 
     # get latest model version
     model_directory = os.path.join(LOCAL_REGISTRY_PATH, "models")
