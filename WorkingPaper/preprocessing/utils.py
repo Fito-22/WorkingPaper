@@ -10,7 +10,7 @@ def make_broader_subdisciplines_physics(data: pd.DataFrame) -> pd.DataFrame:
     physics_mapping_dict = {'astrophysics': ['astronomy', 'astrophysics', 'astrobiology'],\
         'condensed matter': ['condensed matter', 'statistical physics', 'neuroscience', 'biological system', 'nanotechnology', 'molecular physics', 'computational physics'],\
         'general relativy and cosmology': ['classical mechanics', 'mechanics', 'optics'],\
-        'high enery physics': ['atomic physics', 'particle physics'],\
+        'high energy physics': ['atomic physics', 'particle physics'],\
         'mathematical physics': ['geometry', 'mathematical physics', 'applied mathematics', 'theoretical physics', 'pure mathematics'],\
         'nuclear': ['nuclear physics', 'nuclear medicine', 'physical medicine and rehabilitation'],\
         'quantum physics': ['quantum mechanics', 'quantum electrodinamics']}
@@ -33,7 +33,7 @@ def make_broader_subdisciplines_biology(data: pd.DataFrame) -> pd.DataFrame:
     '''The function joins all the subdisciplines from the discipline "biology" as a new column in a given DataFrame
     and returns the modified DataFrame'''
 
-    # Make a mapping of biology subtopics from our api data to more generalised physics subtopics
+    # Make a mapping of biology subtopics from our api data to more generalised biology subtopics
     biology_mapping_dict = {'zoology': 'zoology', 'fishery':'zoology', 'animal science':'zoology', 'oceanography': 'zoology', 'cancer research':'genetics and molecular biology', \
         'biochemical engineering': 'genetics and molecular biology', 'genetics': 'genetics and molecular biology', 'molecular biology': 'genetics and molecular biology','biochemistry': 'genetics and molecular biology', 'chromatography': 'genetics and molecular biology', \
         'biotechnology':'genetics and molecular biology', 'biophysics': 'genetics and molecular biology', 'horticulture': 'botany','forestry': 'botany', 'agroforestry': 'botany', \
