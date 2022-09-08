@@ -48,3 +48,25 @@ def make_broader_subdisciplines_biology(data: pd.DataFrame) -> pd.DataFrame:
     data['broader_subtopic'] = data.where(data['topic'] == 'biology')['subtopic'].map(biology_mapping_dict)
 
     return data
+
+def exclude_interdisciplinary_subdisciplines_medicine(data: pd.DataFrame) -> pd.DataFrame:
+    '''The function excludes all the subdisciplines from the discipline "medicine" that are interdisciplinary, so our models can train better'''
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'algorithm')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'cell biology')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'environmental ethics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'virology')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'optics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'nursing')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'medical physics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'genetics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'bioinformatics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'data science')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microbiology')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microeconomics')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'biotechnology')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'computational biology')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'psychotherapist')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'animal science')]
+    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'food science')]
+
+    return data

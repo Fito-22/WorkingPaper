@@ -9,7 +9,7 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 import string
 from nltk.stem import WordNetLemmatizer
 
-from WorkingPaper.preprocessing.utils import make_broader_subdisciplines_physics, make_broader_subdisciplines_biology
+from WorkingPaper.preprocessing.utils import make_broader_subdisciplines_physics, make_broader_subdisciplines_biology, exclude_interdisciplinary_subdisciplines_medicine
 
 def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
 
@@ -82,31 +82,11 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     data = data[data['broader_subtopic'] != 'computational biology']
 
     # Filtering the data to exclude interdisciplinary medical subtopics (for more distinguishability)
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'algorithm')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'cell biology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'environmental ethics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'virology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'optics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'nursing')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'medical physics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'genetics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'bioinformatics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'data science')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microbiology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'microeconomics')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'biotechnology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'computational biology')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'psychotherapist')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'animal science')]
-    data = data[(data['topic'] != 'medicine') & (data['subtopic'] != 'food science')]
+    data = exclude_interdisciplinary_subdisciplines_medicine(data)
 
-    # Filtering for those topics that occurr more commonly in our data        <----- percentile can be adjusted
+    # Filtering for those topics that occurr more commonly in our data
     common_topics = (data['topic'].value_counts() > np.percentile(data['topic'].value_counts(), 80)) # topic occurrence until xxth percentile
     filtered_topics = common_topics[common_topics == True].index
-
-    # Filtering for those subtopics that occurr more commonly in our data     <----- instead of cutting of at the mean, can also be adjusted like above
-    # common_subtopics = (data['subtopic'].value_counts() > data['subtopic'].value_counts().mean())
-    # filtered_subtopics = common_subtopics[common_subtopics == True].index
 
     # Filtering data according to the topics that are more common
     data = data[data['topic'].isin(list(filtered_topics))]
@@ -153,6 +133,6 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
         return (data['modified_text'], topic_targets_enc, max_length_of_padding, num_of_topics)
 
     # Saving preprocessed data in a csv
-    data.to_csv(f'../raw_data/preprocessed_data.csv', index=False)
+    data.to_csv(f'../preprocessed_data/preprocessed_data.csv', index=False)
 
 preprocessor(model_type='word2vec')

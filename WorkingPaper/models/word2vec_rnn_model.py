@@ -8,8 +8,7 @@ from tensorflow.keras.callbacks import EarlyStopping
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.optimizers.schedules import ExponentialDecay
 
-#from WorkingPaper.preprocessing.preprocessing import preprocessor
-from WorkingPaper.preprocessing.tmp_preprocessing import preprocessor
+from WorkingPaper.preprocessing.preprocessing import preprocessor
 from WorkingPaper.save_load_models.save_model import save_model
 
 def train_word2vec_rnn_model():
