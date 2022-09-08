@@ -44,6 +44,7 @@ joblib
 memoized-property
 termcolor
 colorama
+python-multipart
 
 # api
 fastapi

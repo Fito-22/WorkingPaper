@@ -18,8 +18,8 @@ params={'path':path}
 if path:
 
     try:
-        st.markdown('### Oh so you are interesting in:')
+        st.markdown('### Oh! so you are interested in:')
         response=requests.get(url_path, params).json()
-        st.markdown(f"{response['topic']} and I'm {response['accuracy']*100}% sure")
+        st.markdown(f"#### {str(response['topic']).capitalize()}")
     except:
         'File not found'
