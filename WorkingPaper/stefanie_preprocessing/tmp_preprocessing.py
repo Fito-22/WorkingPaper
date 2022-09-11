@@ -19,8 +19,8 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     Both will be transformed while also reducing the number of samples where either feature or target won't nurture desirable results.
     For further elaboration on the whys and hows see jupyter notebook "preproc_and_word2vec_rnn_stef.ipynb" in the notebooks folder.'''
 
-    # Reading OpenAlex Data
-    openalex_data = pd.read_csv('raw_data/data_21k.csv')
+    # Reading OpenAlex Data+
+    openalex_data = pd.read_csv('raw_data/data_3k.csv')
     openalex_data = openalex_data.drop(columns='Unnamed: 0')
 
     # Reading Arxiv Data
@@ -82,7 +82,7 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     data = data[data['broader_subtopic'] != 'computational biology']
 
     # Filtering for those topics that occurr more commonly in our data        <----- percentile can be adjusted
-    common_topics = (data['topic'].value_counts() > np.percentile(data['topic'].value_counts(), 25)) # topic occurrence until 25th percentile
+    common_topics = (data['topic'].value_counts() > np.percentile(data['topic'].value_counts(), 80)) # topic occurrence until 25th percentile
     filtered_topics = common_topics[common_topics == True].index
 
     # Filtering for those subtopics that occurr more commonly in our data     <----- instead of cutting of at the mean, can also be adjusted like above
@@ -127,6 +127,10 @@ def preprocessor(model_type:str ='embedding') -> (np.ndarray, pd.DataFrame):
     topic_targets_enc = pd.DataFrame(enc.fit_transform(data[['topic']]))
     topic_targets_enc.columns = enc.get_feature_names_out()
 
+    print('Index and columns:\n')
+    for i, column in enumerate(topic_targets_enc.columns):
+        print(i, column)
+    print('\n')
     # return print(X_pad, topic_targets_enc)
     if model_type == 'word2vec':
         return (X_pad, topic_targets_enc)
